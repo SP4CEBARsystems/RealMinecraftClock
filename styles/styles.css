@@ -14,12 +14,12 @@ main {
 article {
     padding: 1em;
     background-color: grey;
-    border-radius: 10px;
+    border-radius: 1em;
     box-shadow: 10px white 10px 10px;
 }
 
 a {
-    padding: 10px;
+    padding: 0.5em;
     background-color: #ccc;
-    border-radius: 5px;
+    border-radius: 0.5em;
 }
