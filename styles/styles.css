@@ -23,3 +23,10 @@ a {
     background-color: #ccc;
     border-radius: 0.5em;
 }
+
+.minecraft-clock {
+    image-rendering: pixelated;
+    background-size: contain;
+    width: 200px;
+    height: fit-content;
+}
