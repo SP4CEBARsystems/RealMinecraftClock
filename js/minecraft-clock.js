@@ -32,7 +32,7 @@ export default class MinecraftClock {
     /** @type {Date} */
     sunrise
 
-    /** @type {number} */
+    /** @type {number} A normalized value from 0 to 1 */
     dayCycle
 
     imageId = 'minecraft-clock'
@@ -45,7 +45,7 @@ export default class MinecraftClock {
     constructor(imageId, place) {
         this.imageId = imageId;
         this.place = place;
-        this.fetchSunsetSunrise();
+        this.fetchSunsetSunrise().then(this.updateClock.bind(this));
     }
 
     // setInterval(clockTick, 100)
@@ -53,36 +53,15 @@ export default class MinecraftClock {
     //     replaceClock("minecraft-clock", (Date.now() / 100) % 64);
     // }
 
-    fetchSunsetSunrise() {
+    async fetchSunsetSunrise() {
         // API Reference https://sunrise-sunset.org/api
         const filePath = `https://api.sunrise-sunset.org/json?lat=${this.place.latitude}&lng=${this.place.longitude}&formatted=0`; 
-        getData(filePath).then(this.updateClock.bind(this));
+        this.sunriseSunsetObject = await getData(filePath);
+        this.sunrise = new Date(this.sunriseSunsetObject.results.sunrise);
+        this.sunset = new Date(this.sunriseSunsetObject.results.sunset);
     }
 
-    /**
-     * 
-     * @param {{
-     *   results:
-     *   {
-     *     sunrise:string,
-     *     sunset:string,
-     *     solar_noon:string,
-     *     day_length:number,
-     *     civil_twilight_begin:string,
-     *     civil_twilight_end:string,
-     *     nautical_twilight_begin:string,
-     *     nautical_twilight_end:string,
-     *     astronomical_twilight_begin:string,
-     *     astronomical_twilight_end:string
-     *   },
-     *   status:string,
-     *   tzid:string
-     * }} sunriseSunsetObject 
-     */
-    updateClock(sunriseSunsetObject){
-        this.sunriseSunsetObject = sunriseSunsetObject;
-        this.sunrise = new Date(sunriseSunsetObject.results.sunrise);
-        this.sunset = new Date(sunriseSunsetObject.results.sunset);
+    updateClock(){
         console.log("sunrise, sunset", this.sunrise, this.sunset);
         this.mapTimeToDayCycle(new Date());
         // console.log("dayCycle", dayCycle);
@@ -98,7 +77,6 @@ export default class MinecraftClock {
      * 0 = sunrise, 0.5 = sunset, 1 = next sunrise
      *
      * @param {Date} now - The current time
-     * @returns {number} A normalized value from 0 to 1
      */
     mapTimeToDayCycle(now) {
         console.log("now, sunrise, sunset", now, this.sunrise, this.sunset);
