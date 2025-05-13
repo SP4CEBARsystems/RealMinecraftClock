@@ -62,9 +62,8 @@ export default class MinecraftClock {
     }
 
     updateClock(){
-        console.log("sunrise, sunset", this.sunrise, this.sunset);
-        this.mapTimeToDayCycle(new Date());
-        // console.log("dayCycle", dayCycle);
+        const now = new Date();
+        this.mapTimeToDayCycle(now);
         this.replaceClock();
     }
 
@@ -79,7 +78,6 @@ export default class MinecraftClock {
      * @param {Date} now - The current time
      */
     mapTimeToDayCycle(now) {
-        console.log("now, sunrise, sunset", now, this.sunrise, this.sunset);
         const dayMilliseconds = 24 * 60 * 60 * 1000;
         const dayDuration = this.sunset.getTime() - this.sunrise.getTime();
         const nightDuration = dayMilliseconds - dayDuration; // full day in ms - day
@@ -98,13 +96,11 @@ export default class MinecraftClock {
             const nightElapsed = (now.getTime() - this.sunset.getTime() + dayMilliseconds) % dayMilliseconds;
             this.dayCycle = 0.5 + (nightElapsed / nightDuration) * 0.5;
         }
-        console.log("dayCycle2", this.dayCycle);
     }
 
     replaceClock() {
         const clockPhase = this.mapdayCycleToClockFrame();
         const safeClockPhase = Math.floor(clockPhase);
-        console.log('clockPhase', safeClockPhase);
         if (safeClockPhase < 0 || safeClockPhase > 63) {
             console.warn(`Clock with frame "${safeClockPhase}" not found.`);
             return;
