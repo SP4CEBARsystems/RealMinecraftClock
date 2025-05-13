@@ -3,7 +3,7 @@ import Place from "./place.js";
 
 export default class MinecraftClock {
     /** @type {Place} */
-    place
+    place;
 
     /**
      * @type {{
@@ -24,28 +24,35 @@ export default class MinecraftClock {
      *   tzid:string
      * }}
      */
-    sunriseSunsetObject
+    sunriseSunsetObject;
 
     /** @type {Date} */
-    sunset
+    sunset;
     
     /** @type {Date} */
-    sunrise
+    sunrise;
 
     /** @type {number} A normalized value from 0 to 1 */
-    dayCycle
+    dayCycle;
 
-    imageId = 'minecraft-clock'
+    imageId = 'minecraft-clock';
+
+    /** @type {number} */
+    intervalTime = 1000 * 60 * 20; // 20 minutes in milliseconds
 
     /**
      * 
      * @param {string} imageId 
      * @param {Place} place 
+     * @param {boolean} isInterval 
      */
-    constructor(imageId, place) {
+    constructor(imageId, place, isInterval = true) {
         this.imageId = imageId;
         this.place = place;
         this.fetchSunsetSunrise().then(this.updateClock.bind(this));
+        if (isInterval) {
+            setInterval(this.updateClock.bind(this), this.intervalTime)
+        }
     }
 
     // setInterval(clockTick, 100)
@@ -61,9 +68,14 @@ export default class MinecraftClock {
         this.sunset = new Date(this.sunriseSunsetObject.results.sunset);
     }
 
-    updateClock(){
-        const now = new Date();
-        this.mapTimeToDayCycle(now);
+    /**
+     * @param {Date} [clockTime] - The time on the clock
+     */
+    updateClock(clockTime){
+        if (clockTime === undefined) {
+            clockTime = new Date();
+        }
+        this.mapTimeToDayCycle(clockTime);
         this.replaceClock();
     }
 
