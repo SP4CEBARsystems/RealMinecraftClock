@@ -55,6 +55,10 @@ export default class MinecraftClock {
         }
     }
 
+    // lerp(a, b, t) {
+    //     return a + (b - a) * t;
+    // }
+
     // setInterval(clockTick, 100)
     // function clockTick() {
     //     replaceClock("minecraft-clock", (Date.now() / 100) % 64);
@@ -74,6 +78,10 @@ export default class MinecraftClock {
     updateClock(clockTime){
         if (clockTime === undefined) {
             clockTime = new Date();
+        }
+        if (this.sunriseSunsetObject === undefined) {
+            console.warn("Sunrise and sunset data not loaded yet.");
+            return;
         }
         this.mapTimeToDayCycle(clockTime);
         this.replaceClock();

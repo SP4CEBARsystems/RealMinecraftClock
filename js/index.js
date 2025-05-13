@@ -3,12 +3,10 @@ import Place from "./place.js";
 
 const template = new Place(36.7201600, -4.4203400);
 const middelburg = new Place(51.495076717135845, 3.6094301071283614);
-new MinecraftClock("minecraft-clock", middelburg);
+const middelburgClock = new MinecraftClock("minecraft-clock", middelburg, false);
 
-// setInterval(clockTick, 100)
-function clockTick() {
-    replaceClock("minecraft-clock", (Date.now() / 100) % 64);
-}
+
+// middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 
 export async function getData(filePath) {
   try {
