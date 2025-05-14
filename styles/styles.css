@@ -7,9 +7,16 @@ body {
 main {
     margin-inline: auto;
     max-width: 600px;
+}
+
+.clocks {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
+}
+
+.custom-clock {
+    margin-bottom: 50px;
 }
 
 article {
