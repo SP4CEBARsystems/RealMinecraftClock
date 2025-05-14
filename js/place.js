@@ -8,4 +8,14 @@ export default class Place {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    /**
+     * 
+     * @param {number} latitude 
+     * @param {number} longitude 
+     */
+    setPosition(latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

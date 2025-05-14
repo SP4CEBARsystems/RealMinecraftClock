@@ -3,7 +3,17 @@ import Place from "./place.js";
 
 const template = new Place(36.7201600, -4.4203400);
 const middelburg = new Place(51.495076717135845, 3.6094301071283614);
-const middelburgClock = new MinecraftClock("minecraft-clock", middelburg, false);
+const amsterdam = new Place(52.37048477035961, 4.8998282171669505);
+const newyork = new Place(40.7108211146979, -73.89155503612763);
+const tokyo = new Place(35.68088000009859, 139.76736474196923);
+const moscow = new Place(55.757054002675325, 37.616568134408794);
+const custom = new Place(0, 0);
+const middelburgClock = new MinecraftClock("minecraft-clock-middelburg", middelburg);
+const amsterdamClock = new MinecraftClock("minecraft-clock-amsterdam", amsterdam);
+const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
+const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
+const moscowClock = new MinecraftClock("minecraft-clock-moscow", moscow);
+const customClock = new MinecraftClock("minecraft-clock-custom", custom);
 
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
