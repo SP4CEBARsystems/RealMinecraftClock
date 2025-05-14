@@ -42,7 +42,7 @@ export default class MinecraftClock {
     animationVelocity = 0;
     
     /** @type {number} */
-    animationDeltaTime = 10
+    animationDeltaTime = 1000/60; // 1 second in milliseconds
 
     /** @type {string} */
     imageId = 'minecraft-clock';
