@@ -55,3 +55,14 @@ export function replaceImage(imageId, newSrc, newAlt = null) {
 function linearMap(value, inMin, inMax, outMin, outMax) {
   return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
+
+/**
+ * 
+ * @param {TimerHandler} callback 
+ * @param {number} interval 
+ * @param {number} timeout 
+ */
+export function setIntervalWithTimeout(callback, interval, timeout) {
+    const intervalId = setInterval(callback, interval);
+    setTimeout(() => clearInterval(intervalId), timeout);
+}
