@@ -51,7 +51,7 @@ export default class MinecraftClock {
      */
     constructor(imageId, place, isInterval = true) {
         this.imageId = imageId;
-        this.place = place;
+        this.place = new Place(place.latitude, place.longitude);
         this.fetchSunsetSunrise().then(this.updateClock.bind(this));
         if (isInterval) {
             setInterval(this.updateClock.bind(this), this.intervalTime)
@@ -64,6 +64,16 @@ export default class MinecraftClock {
         this.sunriseSunsetObject = await getData(filePath);
         this.sunrise = new Date(this.sunriseSunsetObject.results.sunrise);
         this.sunset = new Date(this.sunriseSunsetObject.results.sunset);
+    }
+
+    /**
+     * 
+     * @param {number} latitude 
+     * @param {number} longitude 
+     */
+    setPosition(latitude, longitude) {
+        this.place.setPosition(latitude, longitude);
+        this.fetchSunsetSunrise().then(this.updateClock.bind(this));
     }
 
     /**

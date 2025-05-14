@@ -8,12 +8,22 @@ const newyork = new Place(40.7108211146979, -73.89155503612763);
 const tokyo = new Place(35.68088000009859, 139.76736474196923);
 const moscow = new Place(55.757054002675325, 37.616568134408794);
 const custom = new Place(0, 0);
+const customClock = new MinecraftClock("minecraft-clock-custom", custom);
 const middelburgClock = new MinecraftClock("minecraft-clock-middelburg", middelburg);
 const amsterdamClock = new MinecraftClock("minecraft-clock-amsterdam", amsterdam);
-const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
-const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
 const moscowClock = new MinecraftClock("minecraft-clock-moscow", moscow);
-const customClock = new MinecraftClock("minecraft-clock-custom", custom);
+const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
+const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
+
+document.getElementById("set-custom-clock-button").addEventListener("click", () => {
+  const lat = parseFloat(document.getElementById("custom-clock-latitude-input").value);
+  const lon = parseFloat(document.getElementById("custom-clock-longitude-input").value);
+  if (isNaN(lat) || isNaN(lon)) {
+    alert("Please enter valid latitude and longitude values.");
+    return;
+  }
+  customClock.setPosition(lat, lon);
+});
 
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
