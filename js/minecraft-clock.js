@@ -43,6 +43,8 @@ export default class MinecraftClock {
     /** @type {number} */
     intervalTime = 1000 * 60 * 20; // 20 minutes in milliseconds
 
+    intervalId;
+
     /**
      * 
      * @param {string} imageId 
@@ -52,9 +54,12 @@ export default class MinecraftClock {
     constructor(imageId, place, isInterval = true) {
         this.imageId = imageId;
         this.place = new Place(place.latitude, place.longitude);
-        this.fetchSunsetSunrise().then(this.updateClock.bind(this));
-        if (isInterval) {
-            setInterval(this.updateClock.bind(this), this.intervalTime)
+        if (this.place.latitude === null || this.place.longitude === null) {
+        } else {
+            this.fetchSunsetSunrise().then(this.updateClock.bind(this));
+            if (isInterval) {
+                setInterval(this.updateClock.bind(this), this.intervalTime)
+            }
         }
     }
 

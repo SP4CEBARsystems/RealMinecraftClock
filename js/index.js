@@ -7,7 +7,7 @@ const amsterdam = new Place(52.37048477035961, 4.8998282171669505);
 const newyork = new Place(40.7108211146979, -73.89155503612763);
 const tokyo = new Place(35.68088000009859, 139.76736474196923);
 const moscow = new Place(55.757054002675325, 37.616568134408794);
-const custom = new Place(0, 0);
+const custom = new Place();
 const customClock = new MinecraftClock("minecraft-clock-custom", custom);
 const middelburgClock = new MinecraftClock("minecraft-clock-middelburg", middelburg);
 const amsterdamClock = new MinecraftClock("minecraft-clock-amsterdam", amsterdam);
@@ -16,41 +16,41 @@ const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
 const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
 
 document.getElementById("set-custom-clock-button").addEventListener("click", () => {
-  const lat = parseFloat(document.getElementById("custom-clock-latitude-input").value);
-  const lon = parseFloat(document.getElementById("custom-clock-longitude-input").value);
-  if (isNaN(lat) || isNaN(lon)) {
-    alert("Please enter valid latitude and longitude values.");
-    return;
-  }
-  customClock.setPosition(lat, lon);
+    const lat = parseFloat(document.getElementById("custom-clock-latitude-input").value);
+    const lon = parseFloat(document.getElementById("custom-clock-longitude-input").value);
+    if (isNaN(lat) || isNaN(lon)) {
+        alert("Please enter valid latitude and longitude values.");
+        return;
+    }
+    customClock.setPosition(lat, lon);
 });
 
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 
 export async function getData(filePath) {
-  try {
-    const response = await fetch(filePath);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error.message);
+        throw error;
     }
-    return await response.json();
-  } catch (error) {
-    console.error(error.message);
-    throw error;
-  }
 }
 
 export function replaceImage(imageId, newSrc, newAlt = null) {
-  const img = document.getElementById(imageId);
-  if (!img) {
-    console.warn(`Image with ID "${imageId}" not found.`);
-    return;
-  }
-  img.src = newSrc;
-  if (newAlt !== null) {
-    img.alt = newAlt;
-  }
+    const img = document.getElementById(imageId);
+    if (!img) {
+        console.warn(`Image with ID "${imageId}" not found.`);
+        return;
+    }
+    img.src = newSrc;
+    if (newAlt !== null) {
+        img.alt = newAlt;
+    }
 }
 
 /**
@@ -63,7 +63,7 @@ export function replaceImage(imageId, newSrc, newAlt = null) {
  * @returns {number}
  */
 function linearMap(value, inMin, inMax, outMin, outMax) {
-  return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
 /**

@@ -1,10 +1,10 @@
 export default class Place {
     /**
      * 
-     * @param {number} latitude 
-     * @param {number} longitude 
+     * @param {number|null} latitude 
+     * @param {number|null} longitude 
      */
-    constructor(latitude, longitude) {
+    constructor(latitude = null, longitude = null) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
