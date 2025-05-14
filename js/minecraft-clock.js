@@ -43,6 +43,7 @@ export default class MinecraftClock {
     /** @type {number} */
     intervalTime = 1000 * 60 * 20; // 20 minutes in milliseconds
 
+    /** @type {number|undefined} */
     intervalId;
 
     /**
@@ -55,6 +56,7 @@ export default class MinecraftClock {
         this.imageId = imageId;
         this.place = new Place(place.latitude, place.longitude);
         if (this.place.latitude === null || this.place.longitude === null) {
+            this.intervalId = setInterval(this.setRandomDayCycle.bind(this), 1000);
         } else {
             this.fetchSunsetSunrise().then(this.updateClock.bind(this));
             if (isInterval) {
@@ -77,8 +79,17 @@ export default class MinecraftClock {
      * @param {number} longitude 
      */
     setPosition(latitude, longitude) {
+        this.clearIntervalIfExists();
         this.place.setPosition(latitude, longitude);
         this.fetchSunsetSunrise().then(this.updateClock.bind(this));
+
+    }
+
+    clearIntervalIfExists() {
+        if (this.intervalId !== undefined) {
+            clearInterval(this.intervalId);
+            this.intervalId = undefined;
+        }
     }
 
     /**
@@ -125,6 +136,12 @@ export default class MinecraftClock {
             const nightElapsed = (now.getTime() - this.sunset.getTime() + dayMilliseconds) % dayMilliseconds;
             this.targetDayCycle = 0.5 + (nightElapsed / nightDuration) * 0.5;
         }
+    }
+
+    setRandomDayCycle() {
+        // Set a random clock cycle between 0 and 1
+        this.targetDayCycle = Math.random();
+        this.startClockAnimation();
     }
 
     startClockAnimation() {
