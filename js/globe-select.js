@@ -1,3 +1,19 @@
+function resizeCanvasToDisplaySize(canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+
+  const displayWidth = Math.round(rect.width * dpr);
+  const displayHeight = Math.round(rect.height * dpr);
+
+  if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+    canvas.width = displayWidth;
+    canvas.height = displayHeight;
+    return true; // canvas was resized
+  }
+
+  return false; // no resize needed
+}
+
 export default function initGlobeSelector(){
     const canvas = /**@type {HTMLCanvasElement|null}*/ (document.getElementById('earthCanvas'));
     if (!canvas) return 'no canvas';
@@ -5,6 +21,8 @@ export default function initGlobeSelector(){
     const latitudeInput = /**@type {HTMLInputElement|null}*/ (document.getElementById('custom-clock-latitude-input'));
     const longitudeInput = /**@type {HTMLInputElement|null}*/ (document.getElementById('custom-clock-longitude-input'));
     if (!ctx||!latitudeInput||!longitudeInput) return 'no context or no input element';
+
+    // resizeCanvasToDisplaySize(canvas);
 
     const img = new Image();
     img.src = './assets/earth/Azimuthal_equidistant_projection_SW.jpg';
@@ -20,21 +38,20 @@ export default function initGlobeSelector(){
     canvas.addEventListener('click', (event) => {
         loadImage()
         const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
 
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
 
-        const dx = x - centerX;
-        const dy = y - centerY;
-
-        const angleRad = Math.atan2(dy, dx); // Radians from -π to π
-        const angleDeg = angleRad * (180 / Math.PI); // Convert to degrees
-
         const { latitude, longitude } = getLatitudeLongitudeFromClick(x, y);
 
         plotGlobeLine(ctx, centerX, centerY, x, y); // Render the path
+
+        console.log('x, y', x, y);
 
         latitudeInput.value = latitude.toString(); // Optional: round to 2 decimal places
         longitudeInput.value = longitude.toString(); // Optional: round to 2 decimal places
