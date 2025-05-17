@@ -62,3 +62,7 @@ canvas {
     height: fit-content;
     object-fit: contain;
 }
+
+button {
+    padding: 0.5em;
+}
