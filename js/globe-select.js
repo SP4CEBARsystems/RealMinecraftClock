@@ -45,8 +45,11 @@ export default function initGlobeSelector(){
 
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
+        
+        const dx = x - centerX;
+        const dy = y - centerY;
 
-        const { latitude, longitude } = getLatitudeLongitudeFromClick(x, y);
+        const { latitude, longitude } = getLatitudeLongitudeFromClick(dx, dy, centerX* 2);
 
         plotGlobeLine(ctx, centerX, centerY, x, y);
 
@@ -63,12 +66,7 @@ function plotGlobeLine(ctx, centerX, centerY, x, y) {
     ctx.stroke();
 }
 
-function getLatitudeLongitudeFromClick(x, y, canvasSize = 500) {
-  const centerX = canvasSize / 2;
-  const centerY = canvasSize / 2;
-
-  const dx = x - centerX;
-  const dy = y - centerY;
+function getLatitudeLongitudeFromClick(dx, dy, canvasSize = 500) {
 
   const r = Math.sqrt(dx * dx + dy * dy);
   const maxRadius = canvasSize / 2;
