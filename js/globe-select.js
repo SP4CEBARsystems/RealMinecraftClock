@@ -22,7 +22,7 @@ export default function initGlobeSelector(){
     const longitudeInput = /**@type {HTMLInputElement|null}*/ (document.getElementById('custom-clock-longitude-input'));
     if (!ctx||!latitudeInput||!longitudeInput) return 'no context or no input element';
 
-    // resizeCanvasToDisplaySize(canvas);
+    resizeCanvasToDisplaySize(canvas);
 
     const img = new Image();
     img.src = './assets/earth/Azimuthal_equidistant_projection_SW.jpg';
@@ -30,8 +30,8 @@ export default function initGlobeSelector(){
     img.onload = loadImage;
     
     function loadImage(){
-        if (!ctx) return;
-        ctx.drawImage(img, 0, 0, 500, 500);
+        if (!canvas || !ctx) return;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
 
     canvas.addEventListener('click', (event) => {
