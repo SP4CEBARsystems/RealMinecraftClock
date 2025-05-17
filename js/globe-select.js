@@ -26,7 +26,6 @@ export default function initGlobeSelector(){
 
     const img = new Image();
     img.src = './assets/earth/Azimuthal_equidistant_projection_SW.jpg';
-    // img.src = './assets/earth/500x500/earth-north-90n-0_500x500.png';
 
     img.onload = loadImage;
     
@@ -49,20 +48,18 @@ export default function initGlobeSelector(){
 
         const { latitude, longitude } = getLatitudeLongitudeFromClick(x, y);
 
-        plotGlobeLine(ctx, centerX, centerY, x, y); // Render the path
+        plotGlobeLine(ctx, centerX, centerY, x, y);
 
-        console.log('x, y', x, y);
-
-        latitudeInput.value = latitude.toString(); // Optional: round to 2 decimal places
-        longitudeInput.value = longitude.toString(); // Optional: round to 2 decimal places
+        latitudeInput.value = latitude.toString();
+        longitudeInput.value = longitude.toString();
     });
     return 'success';
 }
 
 function plotGlobeLine(ctx, centerX, centerY, x, y) {
-    ctx.beginPath(); // Start a new path
-    ctx.moveTo(centerX, centerY); // Move the pen to (30, 50)
-    ctx.lineTo(x, y); // Draw a line to (150, 100)
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(x, y);
     ctx.stroke();
 }
 
@@ -79,49 +76,7 @@ function getLatitudeLongitudeFromClick(x, y, canvasSize = 500) {
 
   const latitude = 90 - normalized * 180;
 
-  // Adjust longitude so that 0° is straight down (positive Y)
-  let longitude = Math.atan2(dx, dy) * (180 / Math.PI); // Swap dx/dy
-//   if (longitude < 0) longitude += 360;
+  let longitude = Math.atan2(dx, dy) * (180 / Math.PI);
 
   return { latitude, longitude };
 }
-
-// function getLatitudeLongitudeFromClick(x, y, width = 500, height = 100) {
-//   const centerX = width / 2;
-//   const centerY = height / 2;
-//   const maxRadius = height / 2; // 50px
-
-//   const dx = x - centerX;
-//   const dy = y - centerY;
-
-//   const r = Math.sqrt(dx * dx + dy * dy);
-
-//   // Latitude: from -90 (pole) to 0 (equator)
-//   const latitude = -90 + (r / maxRadius) * 90;
-
-//   // Longitude: 0° is straight up, increase clockwise
-//   let longitude = Math.atan2(dx, -dy) * (180 / Math.PI); // flipped dy because 0° is up
-//   if (longitude < 0) longitude += 360;
-
-//   return { latitude, longitude };
-// }
-
-// function getLatitudeLongitudeFromClick(x, y, canvasSize = 500) {
-//     const centerX = canvasSize / 2;
-//     const centerY = canvasSize / 2;
-
-//     const dx = x - centerX;
-//     const dy = y - centerY;
-
-//     const r = Math.sqrt(dx * dx + dy * dy);
-//     console.log('r', r)
-//     const maxRadius = 195;
-
-//     const latitude = Math.acos(r / maxRadius) * (180 / Math.PI);
-
-//     // Longitude: 0° is straight down
-//     let longitude = Math.atan2(dx, dy) * (180 / Math.PI); // Swapped for 0° = down
-//     if (longitude < 0) longitude += 360;
-
-//     return { latitude, longitude };
-// }
