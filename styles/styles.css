@@ -47,3 +47,11 @@ summary {
     background-color: lightgray;
     color: black;
 }
+
+aside {
+    margin-top: 10em;
+}
+
+li {
+    margin-bottom: 0.8em;
+}
