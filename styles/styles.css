@@ -38,3 +38,12 @@ a {
     width: 200px;
     height: fit-content;
 }
+
+summary {
+    cursor: pointer;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: lightgray;
+    color: black;
+}
