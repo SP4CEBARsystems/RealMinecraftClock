@@ -10,11 +10,15 @@ export default function initGlobeSelector(){
     img.src = './assets/earth/Azimuthal_equidistant_projection_SW.jpg';
     // img.src = './assets/earth/500x500/earth-north-90n-0_500x500.png';
 
-    img.onload = () => {
+    img.onload = loadImage;
+    
+    function loadImage(){
+        if (!ctx) return;
         ctx.drawImage(img, 0, 0, 500, 500);
-    };
+    }
 
     canvas.addEventListener('click', (event) => {
+        loadImage()
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
