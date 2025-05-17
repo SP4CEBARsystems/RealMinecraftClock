@@ -1,3 +1,4 @@
+import initGlobeSelector from "./globe-select.js";
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
@@ -15,7 +16,8 @@ const moscowClock = new MinecraftClock("minecraft-clock-moscow", moscow);
 const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
 const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
 
-document.getElementById("set-custom-clock-button").addEventListener("click", () => {
+const setClockButton = document.getElementById("set-custom-clock-button");
+setClockButton.addEventListener("click", () => {
     const lat = parseFloat(document.getElementById("custom-clock-latitude-input").value);
     const lon = parseFloat(document.getElementById("custom-clock-longitude-input").value);
     if (isNaN(lat) || isNaN(lon)) {
@@ -25,6 +27,7 @@ document.getElementById("set-custom-clock-button").addEventListener("click", () 
     customClock.setPosition(lat, lon);
 });
 
+console.log(initGlobeSelector());
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 
