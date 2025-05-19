@@ -6,13 +6,14 @@ body {
 
 main {
     margin-inline: auto;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .clocks {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1em;
+    /* grid-template-columns: repeat(auto-fit, 1fr); */
 }
 
 .custom-clock {
@@ -24,6 +25,7 @@ article {
     background-color: grey;
     border-radius: 1em;
     box-shadow: 10px white 10px 10px;
+    flex: 1;
 }
 
 a {
