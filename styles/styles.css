@@ -39,6 +39,17 @@ a {
     background-size: contain;
     width: 200px;
     height: fit-content;
+    /* box-shadow: 10px 5px 5px red; */
+    filter: drop-shadow(8px 16px 40px black);
+    margin: 1em 0;
+    /* margin-inline: auto; */
+}
+
+#earthCanvas {
+    border-radius: 50%;
+    box-shadow: 8px 16px 100px black;
+    /* filter: drop-shadow(8px 16px 40px black); */
+    margin: 2em 0;
 }
 
 summary {
