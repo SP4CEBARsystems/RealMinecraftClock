@@ -25,11 +25,11 @@ export default class SunriseSunset {
         this.results = sunriseSunsetObject.results;
         this.status = sunriseSunsetObject.status;
         this.tzid = sunriseSunsetObject.tzid;
+        this.sunrise = new Date(this.results.sunrise);
+        this.sunset = new Date(this.results.sunset);
     }
     
     getTimes(){
-        this.sunrise = new Date(this.results.sunrise);
-        this.sunset = new Date(this.results.sunset);
         return {sunrise: this.sunrise, sunset: this.sunset};
     }
     
