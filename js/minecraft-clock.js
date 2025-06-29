@@ -109,7 +109,7 @@ export default class MinecraftClock {
             return;
         }
         this.setDayCycle(clockTime);
-        this.startClockAnimation();
+        this.animator.start();
     }
 
     getClockFrame() {
@@ -146,10 +146,6 @@ export default class MinecraftClock {
     setRandomDayCycle() {
         // Set a random clock cycle between 0 and 1
         this.animator.setTargetDayCycle(Math.random());
-    }
-
-    startClockAnimation() {
-        this.animator.setTargetDayCycle(this.animator.targetDayCycle);
     }
 
     updateClockImage() {
