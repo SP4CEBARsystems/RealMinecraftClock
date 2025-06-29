@@ -28,14 +28,14 @@ export default class SunriseSunset {
     }
     
     getTimes(){
-        const sunrise = new Date(this.results.sunrise);
-        const sunset = new Date(this.results.sunset);
-        return {sunrise: sunrise, sunset: sunset};
+        this.sunrise = new Date(this.results.sunrise);
+        this.sunset = new Date(this.results.sunset);
+        return {sunrise: this.sunrise, sunset: this.sunset};
     }
     
     /**
-     * Fetches a SunriseSunset object from the sunrise-sunset api for a given place on earth
-     * API Reference https://sunrise-sunset.org/api
+     * Fetches a SunriseSunset object from the sunrise-sunset api for a given place on earth.
+     * API Reference: https://sunrise-sunset.org/api
      * @param {Place} place on earth to request the sunset-sunrise object of 
      * @returns {Promise<SunriseSunset>} sunset-sunrise object
      */
