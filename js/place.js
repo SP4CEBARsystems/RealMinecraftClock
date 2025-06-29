@@ -5,8 +5,10 @@ export default class Place {
      * 
      * @param {number|null} latitude 
      * @param {number|null} longitude 
+     * @param {string} [name] 
      */
-    constructor(latitude = null, longitude = null) {
+    constructor(latitude = null, longitude = null, name) {
+        this.name = name ?? null;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -19,6 +21,13 @@ export default class Place {
     setPosition(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    /**
+     * @returns {string} the ID of the DOM element to display the clock on this place
+     */
+    getClockIdFromName() {
+        return `minecraft-clock-${this.name}`;
     }
 
     /**
