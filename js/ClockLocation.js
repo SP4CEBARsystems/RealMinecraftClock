@@ -12,8 +12,8 @@ export default class ClockLocation {
     constructor(name, lat, lon, clockId) {
         this.place = new Place(lat, lon, name);
         this.clock = undefined;
-        this.place.fetchSunriseSunset().then((sunriseSunset) => {
-            this.clock = new MinecraftClock(this.place.getClockIdFromName(), sunriseSunset);
+        this.place.createMinecraftClock().then((clock) => {
+            this.clock = clock;
         });
     }
 }
