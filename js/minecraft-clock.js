@@ -1,4 +1,4 @@
-import { getData, replaceImage, setIntervalWithTimeout } from "./index.js";
+import { fetchJson, replaceImage, setIntervalWithTimeout } from "./index.js";
 import Place from "./place.js";
 import ClockAnimator from "./clock-animator.js"; // <-- Add this import
 
@@ -74,7 +74,7 @@ export default class MinecraftClock {
     async fetchSunsetSunrise() {
         // API Reference https://sunrise-sunset.org/api
         const filePath = `https://api.sunrise-sunset.org/json?lat=${this.place.latitude}&lng=${this.place.longitude}&formatted=0`; 
-        this.sunriseSunsetObject = await getData(filePath);
+        this.sunriseSunsetObject = await fetchJson(filePath);
         this.sunrise = new Date(this.sunriseSunsetObject.results.sunrise);
         this.sunset = new Date(this.sunriseSunsetObject.results.sunset);
     }

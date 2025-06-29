@@ -15,11 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 
-export async function getData(filePath) {
+/**
+ * 
+ * @param {string} filePath 
+ * @returns {Promise<any>}
+ */
+export async function fetchJson(filePath) {
     try {
         const response = await fetch(filePath);
         if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+            throw new Error(`Response status: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
