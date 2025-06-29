@@ -1,15 +1,22 @@
 import AdjustableMinecraftClock from "./AdjustableMinecraftClock.js";
 import ClockLocation from "./ClockLocation.js";
+import Place from "./place.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const clockLocations = [
-        // new ClockLocation("template", 36.7201600, -4.4203400, null),
-        new ClockLocation("middelburg", 51.495076717135845, 3.6094301071283614, "minecraft-clock-middelburg"),
-        new ClockLocation("amsterdam", 52.37048477035961, 4.8998282171669505, "minecraft-clock-amsterdam"),
-        new ClockLocation("newyork", 40.7108211146979, -73.89155503612763, "minecraft-clock-newyork"),
-        new ClockLocation("tokyo", 35.68088000009859, 139.76736474196923, "minecraft-clock-tokyo"),
-        new ClockLocation("moscow", 55.757054002675325, 37.616568134408794, "minecraft-clock-moscow"),
+        // new ClockLocation(36.7201600, -4.4203400, "template"),
+        new Place(51.495076717135845, 3.6094301071283614, "middelburg"),
+        new Place(52.37048477035961, 4.8998282171669505, "amsterdam"),
+        new Place(40.7108211146979, -73.89155503612763, "newyork"),
+        new Place(35.68088000009859, 139.76736474196923, "tokyo"),
+        new Place(55.757054002675325, 37.616568134408794, "moscow"),
     ];
+
+    clockLocations.map(place => {
+        place.createMinecraftClock().then((clock) => {
+            return clock;
+        });
+    });
     new AdjustableMinecraftClock();
 });
 
