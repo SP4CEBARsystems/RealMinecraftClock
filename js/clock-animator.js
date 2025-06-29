@@ -20,8 +20,9 @@ export default class ClockAnimator {
         this.clear();
         this.animationId = setInterval(this.update.bind(this), this.animationDeltaTime);
     }
-
+    
     clear() {
+        // this.animationVelocity = 0;
         if (this.animationId !== undefined) {
             clearInterval(this.animationId);
             this.animationId = undefined;
@@ -29,6 +30,11 @@ export default class ClockAnimator {
     }
 
     update() {
+        // Interpolate between current and target day cycle
+        // this.currentDayCycle = this.targetDayCycle;
+        // this.currentDayCycle = this.lerp(this.currentDayCycle, this.targetDayCycle, 0.1);
+        // this.animationVelocity = this.lerp(this.animationVelocity, this.targetDayCycle - this.currentDayCycle, 0.1);
+        // const gain = 0.1;
         const stiffness = 0.99;
         const damping = 0.95;
         const displacement = this.targetDayCycle - this.currentDayCycle;
@@ -38,7 +44,19 @@ export default class ClockAnimator {
         }
         const force = displacement * stiffness;
         this.animationVelocity = (this.animationVelocity + force) * damping;
+        // this.animationVelocity += Math.sign(displacement) * gain;
         this.currentDayCycle += this.animationVelocity * this.animationDeltaTime / 1000;
         if (this.onUpdate) this.onUpdate();
+    }
+
+    /**
+     * Linear interpolation between two values
+     * @param {number} a 
+     * @param {number} b 
+     * @param {number} t 
+     * @returns {number}
+     */
+    lerp(a, b, t) {
+        return a + (b - a) * t;
     }
 }
