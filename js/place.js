@@ -1,3 +1,5 @@
+import SunriseSunset from "./SunriseSunset.js";
+
 export default class Place {
     /**
      * 
@@ -17,5 +19,13 @@ export default class Place {
     setPosition(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    async fetchSunriseSunset() { 
+        try {
+            return (await SunriseSunset.fetchSunriseSunset(this)).getTimes();
+        } catch (error) {
+            throw error;
+        }
     }
 }
