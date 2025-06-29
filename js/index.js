@@ -12,10 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         new Place(55.757054002675325, 37.616568134408794, "moscow"),
     ];
 
-    clockLocations.map(place => {
-        place.createMinecraftClock().then((clock) => {
-            return clock;
-        });
+    const clockRequests = clockLocations.map(place => place.createMinecraftClock());
+    Promise.all(clockRequests).then((clock) => {
+        console.log('all clocks created', clock);
     });
     new AdjustableMinecraftClock();
 });
