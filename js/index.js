@@ -2,19 +2,37 @@ import initGlobeSelector from "./globe-select.js";
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
-const template = new Place(36.7201600, -4.4203400);
-const middelburg = new Place(51.495076717135845, 3.6094301071283614);
-const amsterdam = new Place(52.37048477035961, 4.8998282171669505);
-const newyork = new Place(40.7108211146979, -73.89155503612763);
-const tokyo = new Place(35.68088000009859, 139.76736474196923);
-const moscow = new Place(55.757054002675325, 37.616568134408794);
-const custom = new Place();
-const customClock = new MinecraftClock("minecraft-clock-custom", custom);
-const middelburgClock = new MinecraftClock("minecraft-clock-middelburg", middelburg);
-const amsterdamClock = new MinecraftClock("minecraft-clock-amsterdam", amsterdam);
-const moscowClock = new MinecraftClock("minecraft-clock-moscow", moscow);
-const tokyoClock = new MinecraftClock("minecraft-clock-tokyo", tokyo);
-const newyorkClock = new MinecraftClock("minecraft-clock-newyork", newyork);
+class ClockLocation {
+    /**
+     * 
+     * @param {string} name of the clock element
+     * @param {number} lat of the clock's location
+     * @param {number} lon of the clock's location
+     * @param {string} clockId Element ID of the clock element
+     */
+    constructor(name, lat, lon, clockId) {
+        this.place = new Place(lat, lon);
+        this.clock = new MinecraftClock(clockId, this.place);
+        this.name = name;
+    }
+}
+
+const clockLocations = [
+    new ClockLocation("template", 36.7201600, -4.4203400, null),
+    new ClockLocation("middelburg", 51.495076717135845, 3.6094301071283614, "minecraft-clock-middelburg"),
+    new ClockLocation("amsterdam", 52.37048477035961, 4.8998282171669505, "minecraft-clock-amsterdam"),
+    new ClockLocation("newyork", 40.7108211146979, -73.89155503612763, "minecraft-clock-newyork"),
+    new ClockLocation("tokyo", 35.68088000009859, 139.76736474196923, "minecraft-clock-tokyo"),
+    new ClockLocation("moscow", 55.757054002675325, 37.616568134408794, "minecraft-clock-moscow"),
+    new ClockLocation("custom", null, null, "minecraft-clock-custom"),
+];
+
+const customClock = clockLocations.find(loc => loc.name === "custom").clock;
+const middelburgClock = clockLocations.find(loc => loc.name === "middelburg").clock;
+const amsterdamClock = clockLocations.find(loc => loc.name === "amsterdam").clock;
+const moscowClock = clockLocations.find(loc => loc.name === "moscow").clock;
+const tokyoClock = clockLocations.find(loc => loc.name === "tokyo").clock;
+const newyorkClock = clockLocations.find(loc => loc.name === "newyork").clock;
 
 const setClockButton = document.getElementById("set-custom-clock-button");
 setClockButton.addEventListener("click", () => {
