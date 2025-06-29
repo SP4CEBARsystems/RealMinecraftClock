@@ -1,9 +1,9 @@
 import AdjustableMinecraftClock from "./AdjustableMinecraftClock.js";
-import ClockLocation from "./ClockLocation.js";
+import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    const clockLocations = [
+    const places = [
         // new ClockLocation(36.7201600, -4.4203400, "template"),
         new Place(51.495076717135845, 3.6094301071283614, "middelburg"),
         new Place(52.37048477035961, 4.8998282171669505, "amsterdam"),
@@ -12,10 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
         new Place(55.757054002675325, 37.616568134408794, "moscow"),
     ];
 
-    const clockRequests = clockLocations.map(place => place.createMinecraftClock());
-    Promise.all(clockRequests).then((clock) => {
-        console.log('all clocks created', clock);
+    const sunriseSunsetRequests = places.map(place => place.fetchSunriseSunset());
+    Promise.all(sunriseSunsetRequests).then((sunriseSunsets) => {
+        sunriseSunsets.map((sunriseSunset, index) => 
+            new MinecraftClock(places[index]?.getClockIdFromName(), sunriseSunset)
+        );
+        console.log('all clocks created', sunriseSunsets);
     });
+
     new AdjustableMinecraftClock();
 });
 
