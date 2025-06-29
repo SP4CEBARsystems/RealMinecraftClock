@@ -1,5 +1,6 @@
 import { getData, replaceImage, setIntervalWithTimeout } from "./index.js";
 import Place from "./place.js";
+import ClockAnimator from "./clock-animator.js"; // <-- Add this import
 
 export default class MinecraftClock {
     /** @type {Place} */
@@ -56,6 +57,9 @@ export default class MinecraftClock {
     /** @type {number|undefined} */
     animationId;
 
+    /** @type {ClockAnimator} */
+    animator;
+
     /**
      * 
      * @param {string} imageId 
@@ -65,6 +69,7 @@ export default class MinecraftClock {
     constructor(imageId, place, isInterval = true) {
         this.imageId = imageId;
         this.place = new Place(place.latitude, place.longitude);
+        this.animator = new ClockAnimator(this.updateClockImage.bind(this));
         if (this.place.latitude === null || this.place.longitude === null) {
             this.intervalId = setInterval(this.setRandomDayCycle.bind(this), 1000);
         } else {
@@ -92,7 +97,6 @@ export default class MinecraftClock {
         this.clearIntervalIfExists();
         this.place.setPosition(latitude, longitude);
         this.fetchSunsetSunrise().then(this.updateClock.bind(this));
-
     }
 
     clearIntervalIfExists() {
@@ -118,7 +122,7 @@ export default class MinecraftClock {
     }
 
     getClockFrame() {
-        return ((this.currentDayCycle + 0.75) % 1) * 64;
+        return ((this.animator.currentDayCycle + 0.75) % 1) * 64;
     }
 
     /**
@@ -135,7 +139,7 @@ export default class MinecraftClock {
         const isNowDay = now >= this.sunrise && now < this.sunset;
         if (isNowDay) {
             // Daytime: map [sunrise, sunset] to [0, 0.5]
-            this.targetDayCycle = (now.getTime() - this.sunrise.getTime()) / dayDuration * 0.5;
+            this.animator.targetDayCycle = (now.getTime() - this.sunrise.getTime()) / dayDuration * 0.5;
         } else {
             // Nighttime: map [sunset, next sunrise] to [0.5, 1]
             // let nextSunrise = new Date(sunrise.getTime() + dayMilliseconds);
@@ -144,58 +148,17 @@ export default class MinecraftClock {
                 this.sunset = new Date(this.sunset.getTime() - dayMilliseconds);
             }
             const nightElapsed = (now.getTime() - this.sunset.getTime() + dayMilliseconds) % dayMilliseconds;
-            this.targetDayCycle = 0.5 + (nightElapsed / nightDuration) * 0.5;
+            this.animator.targetDayCycle = 0.5 + (nightElapsed / nightDuration) * 0.5;
         }
     }
 
     setRandomDayCycle() {
         // Set a random clock cycle between 0 and 1
-        this.targetDayCycle = Math.random();
-        this.startClockAnimation();
+        this.animator.setTargetDayCycle(Math.random());
     }
 
     startClockAnimation() {
-        this.clearAnimation();
-        this.animationId = setInterval(this.updateClockAnimation.bind(this), this.animationDeltaTime);
-    }
-    
-    clearAnimation() {
-        // this.animationVelocity = 0;
-        if (this.animationId !== undefined) {
-            clearInterval(this.animationId);
-            this.animationId = undefined;
-        }
-    }
-
-    updateClockAnimation() {
-        // Interpolate between current and target day cycle
-        // this.currentDayCycle = this.targetDayCycle;
-        // this.currentDayCycle = this.lerp(this.currentDayCycle, this.targetDayCycle, 0.1);
-        // this.animationVelocity = this.lerp(this.animationVelocity, this.targetDayCycle - this.currentDayCycle, 0.1);
-        const gain = 0.1;
-        const stiffness = 0.99;
-        const damping = 0.95;
-        const displacement = this.targetDayCycle - this.currentDayCycle;
-        if (Math.abs(displacement) < 0.01 && Math.abs(this.animationVelocity) <= 0.1) {
-            this.animationVelocity = 0;
-            return;
-        }
-        const force = displacement * stiffness;
-        this.animationVelocity = (this.animationVelocity + force) * damping;
-        // this.animationVelocity += Math.sign(displacement) * gain;
-        this.currentDayCycle += this.animationVelocity * this.animationDeltaTime / 1000;
-        this.updateClockImage();
-    }
-
-    /**
-     * Linear interpolation between two values
-     * @param {number} a 
-     * @param {number} b 
-     * @param {number} t 
-     * @returns {number}
-     */
-    lerp(a, b, t) {
-        return a + (b - a) * t;
+        this.animator.setTargetDayCycle(this.animator.targetDayCycle);
     }
 
     updateClockImage() {
