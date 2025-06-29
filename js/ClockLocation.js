@@ -1,7 +1,7 @@
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
-export class ClockLocation {
+export default class ClockLocation {
     /**
      *
      * @param {string} name of the clock element

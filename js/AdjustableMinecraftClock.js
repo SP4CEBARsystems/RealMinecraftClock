@@ -2,7 +2,7 @@ import initGlobeSelector from "./globe-select.js";
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
-export class AdjustableMinecraftClock extends MinecraftClock {
+export default class AdjustableMinecraftClock extends MinecraftClock {
     constructor() {
         super("minecraft-clock-custom", new Place());
 

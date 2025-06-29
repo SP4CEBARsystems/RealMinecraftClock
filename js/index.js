@@ -1,5 +1,5 @@
-import { AdjustableMinecraftClock } from "./AdjustableMinecraftClock.js";
-import { ClockLocation } from "./ClockLocation.js";
+import AdjustableMinecraftClock from "./AdjustableMinecraftClock.js";
+import ClockLocation from "./ClockLocation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const clockLocations = [
