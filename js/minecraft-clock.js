@@ -39,12 +39,6 @@ export default class MinecraftClock {
     /** @type {number} A normalized value from 0 to 1 */
     targetDayCycle;
 
-    /** @type {number} */
-    animationVelocity = 0;
-    
-    /** @type {number} */
-    animationDeltaTime = 1000/60; // 1 second in milliseconds
-
     /** @type {string} */
     imageId = 'minecraft-clock';
 
@@ -53,9 +47,6 @@ export default class MinecraftClock {
 
     /** @type {number|undefined} */
     intervalId;
-
-    /** @type {number|undefined} */
-    animationId;
 
     /** @type {ClockAnimator} */
     animator;
