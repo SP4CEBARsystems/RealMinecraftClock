@@ -21,11 +21,11 @@ export default class Place {
         this.longitude = longitude;
     }
 
-    async fetchSunriseSunset() { 
-        try {
-            return (await SunriseSunset.fetchSunriseSunset(this)).getTimes();
-        } catch (error) {
-            throw error;
-        }
+    /**
+     * Fetches a SunriseSunset object from the sunrise-sunset api at this location
+     * @returns {Promise<SunriseSunset>}
+     */
+    fetchSunriseSunset() { 
+        return SunriseSunset.fetchSunriseSunset(this);
     }
 }
