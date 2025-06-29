@@ -1,6 +1,5 @@
 import { AdjustableMinecraftClock } from "./AdjustableMinecraftClock.js";
 import { ClockLocation } from "./ClockLocation.js";
-import initGlobeSelector from "./globe-select.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const clockLocations = [
@@ -11,11 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         new ClockLocation("tokyo", 35.68088000009859, 139.76736474196923, "minecraft-clock-tokyo"),
         new ClockLocation("moscow", 55.757054002675325, 37.616568134408794, "minecraft-clock-moscow"),
     ];
-
-
     new AdjustableMinecraftClock();
-
-    console.log(initGlobeSelector());
 });
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
