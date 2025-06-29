@@ -1,4 +1,4 @@
-import initGlobeSelector from "./globe-select.js";
+import GlobeSelector from "./GlobeSelector.js";
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
@@ -19,6 +19,6 @@ export default class AdjustableMinecraftClock extends MinecraftClock {
             }
             this.setPosition(lat, lon);
         });
-        console.log(initGlobeSelector());
+        console.log(new GlobeSelector());
     }
 }
