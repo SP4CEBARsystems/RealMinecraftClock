@@ -1,48 +1,42 @@
+import { ClockLocation } from "./ClockLocation.js";
 import initGlobeSelector from "./globe-select.js";
 import MinecraftClock from "./minecraft-clock.js";
 import Place from "./place.js";
 
+document.addEventListener("DOMContentLoaded", () => {
+    const clockLocations = [
+        // new ClockLocation("template", 36.7201600, -4.4203400, null),
+        new ClockLocation("middelburg", 51.495076717135845, 3.6094301071283614, "minecraft-clock-middelburg"),
+        new ClockLocation("amsterdam", 52.37048477035961, 4.8998282171669505, "minecraft-clock-amsterdam"),
+        new ClockLocation("newyork", 40.7108211146979, -73.89155503612763, "minecraft-clock-newyork"),
+        new ClockLocation("tokyo", 35.68088000009859, 139.76736474196923, "minecraft-clock-tokyo"),
+        new ClockLocation("moscow", 55.757054002675325, 37.616568134408794, "minecraft-clock-moscow"),
+    ];
 
 
-class ClockLocation {
-    /**
-     * 
-     * @param {string} name of the clock element
-     * @param {number|null} lat of the clock's location
-     * @param {number|null} lon of the clock's location
-     * @param {string} clockId Element ID of the clock element
-     */
-    constructor(name, lat, lon, clockId) {
-        this.place = new Place(lat, lon);
-        this.clock = new MinecraftClock(clockId, this.place);
-        this.name = name;
+    class AdjustableMinecraftClock extends MinecraftClock {
+        constructor() {
+            super("minecraft-clock-custom", new Place());
+            
+            const setClockButton = document.getElementById("set-custom-clock-button");
+            if (!setClockButton) {
+                return;
+            }
+            setClockButton.addEventListener("click", () => {
+                const lat = parseFloat(document.getElementById("custom-clock-latitude-input")?.value);
+                const lon = parseFloat(document.getElementById("custom-clock-longitude-input")?.value);
+                if (isNaN(lat) || isNaN(lon)) {
+                    alert("Please enter valid latitude and longitude values.");
+                    return;
+                }
+                this.setPosition(lat, lon);
+            });
+        }
     }
-}
+    new AdjustableMinecraftClock();
 
-const clockLocations = [
-    // new ClockLocation("template", 36.7201600, -4.4203400, null),
-    new ClockLocation("middelburg", 51.495076717135845, 3.6094301071283614, "minecraft-clock-middelburg"),
-    new ClockLocation("amsterdam", 52.37048477035961, 4.8998282171669505, "minecraft-clock-amsterdam"),
-    new ClockLocation("newyork", 40.7108211146979, -73.89155503612763, "minecraft-clock-newyork"),
-    new ClockLocation("tokyo", 35.68088000009859, 139.76736474196923, "minecraft-clock-tokyo"),
-    new ClockLocation("moscow", 55.757054002675325, 37.616568134408794, "minecraft-clock-moscow"),
-    new ClockLocation("custom", null, null, "minecraft-clock-custom"),
-];
-
-const customClock = clockLocations.find(loc => loc.name === "custom")?.clock;
-
-const setClockButton = document.getElementById("set-custom-clock-button");
-setClockButton.addEventListener("click", () => {
-    const lat = parseFloat(document.getElementById("custom-clock-latitude-input").value);
-    const lon = parseFloat(document.getElementById("custom-clock-longitude-input").value);
-    if (isNaN(lat) || isNaN(lon)) {
-        alert("Please enter valid latitude and longitude values.");
-        return;
-    }
-    customClock.setPosition(lat, lon);
+    console.log(initGlobeSelector());
 });
-
-console.log(initGlobeSelector());
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 
