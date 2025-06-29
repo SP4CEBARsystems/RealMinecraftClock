@@ -11,7 +11,12 @@ export default class ClockLocation {
      */
     constructor(name, lat, lon, clockId) {
         this.place = new Place(lat, lon);
-        this.clock = new MinecraftClock(clockId, this.place);
+        this.clock = undefined;
+        let minecraftClock;
+        this.place.fetchSunriseSunset().then((sunriseSunset) => {
+            minecraftClock = new MinecraftClock(clockId, sunriseSunset);
+        });
+        this.clock = minecraftClock;
         this.name = name;
     }
 }

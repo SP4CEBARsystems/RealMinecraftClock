@@ -1,32 +1,8 @@
-import { fetchJson, replaceImage, setIntervalWithTimeout } from "./index.js";
-import Place from "./place.js";
-import ClockAnimator from "./clock-animator.js"; // <-- Add this import
+import { replaceImage } from "./index.js";
+import ClockAnimator from "./clock-animator.js";
+import SunriseSunset from "./SunriseSunset.js";
 
 export default class MinecraftClock {
-    /** @type {Place} */
-    place;
-
-    /**
-     * @type {{
-     *   results:
-     *   {
-     *     sunrise:string,
-     *     sunset:string,
-     *     solar_noon:string,
-     *     day_length:number,
-     *     civil_twilight_begin:string,
-     *     civil_twilight_end:string,
-     *     nautical_twilight_begin:string,
-     *     nautical_twilight_end:string,
-     *     astronomical_twilight_begin:string,
-     *     astronomical_twilight_end:string
-     *   },
-     *   status:string,
-     *   tzid:string
-     * }}
-     */
-    sunriseSunsetObject;
-
     /** @type {Date} */
     sunset;
     
@@ -54,40 +30,36 @@ export default class MinecraftClock {
     /**
      * 
      * @param {string} imageId 
-     * @param {Place} place 
+     * @param {SunriseSunset} [sunriseSunset] 
      * @param {boolean} isInterval 
      */
-    constructor(imageId, place, isInterval = true) {
+    constructor(imageId, sunriseSunset, isInterval = true) {
         this.imageId = imageId;
-        this.place = new Place(place.latitude, place.longitude);
         this.animator = new ClockAnimator(this.updateClockImage.bind(this));
-        if (this.place.latitude === null || this.place.longitude === null) {
+        if (sunriseSunset?.sunrise === undefined || sunriseSunset?.sunset === undefined) {
             this.intervalId = setInterval(this.setRandomDayCycle.bind(this), 1000);
         } else {
-            this.fetchSunsetSunrise().then(this.updateClock.bind(this));
+            this.sunrise = sunriseSunset.sunrise;
+            this.sunset = sunriseSunset.sunset;
+            this.updateClock();
             if (isInterval) {
                 setInterval(this.updateClock.bind(this), this.intervalTime)
             }
         }
     }
 
-    async fetchSunsetSunrise() {
-        // API Reference https://sunrise-sunset.org/api
-        const filePath = `https://api.sunrise-sunset.org/json?lat=${this.place.latitude}&lng=${this.place.longitude}&formatted=0`; 
-        this.sunriseSunsetObject = await fetchJson(filePath);
-        this.sunrise = new Date(this.sunriseSunsetObject.results.sunrise);
-        this.sunset = new Date(this.sunriseSunsetObject.results.sunset);
-    }
-
     /**
      * 
-     * @param {number} latitude 
-     * @param {number} longitude 
+     * @param {SunriseSunset} sunriseSunset
      */
-    setPosition(latitude, longitude) {
+    setSunriseSunset(sunriseSunset) {
         this.clearIntervalIfExists();
-        this.place.setPosition(latitude, longitude);
-        this.fetchSunsetSunrise().then(this.updateClock.bind(this));
+        if (sunriseSunset.sunrise === undefined || sunriseSunset.sunset === undefined) {
+            return
+        }
+        this.sunrise = sunriseSunset.sunrise;
+        this.sunset = sunriseSunset.sunset;
+        this.updateClock();
     }
 
     clearIntervalIfExists() {
@@ -103,10 +75,6 @@ export default class MinecraftClock {
     updateClock(clockTime){
         if (clockTime === undefined) {
             clockTime = new Date();
-        }
-        if (this.sunriseSunsetObject === undefined) {
-            console.warn("Sunrise and sunset data not loaded yet.");
-            return;
         }
         this.setDayCycle(clockTime);
         this.animator.start();

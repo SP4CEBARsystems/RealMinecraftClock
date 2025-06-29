@@ -4,7 +4,7 @@ import Place from "./place.js";
 
 export default class AdjustableMinecraftClock extends MinecraftClock {
     constructor() {
-        super("minecraft-clock-custom", new Place());
+        super("minecraft-clock-custom");
 
         const setClockButton = document.getElementById("set-custom-clock-button");
         if (!setClockButton) {
@@ -17,7 +17,10 @@ export default class AdjustableMinecraftClock extends MinecraftClock {
                 alert("Please enter valid latitude and longitude values.");
                 return;
             }
-            this.setPosition(lat, lon);
+            const place = new Place(lat, lon);
+            place.fetchSunriseSunset().then((sunriseSunset) => {
+                this.setSunriseSunset(sunriseSunset);
+            });
         });
         console.log(new GlobeSelector());
     }
