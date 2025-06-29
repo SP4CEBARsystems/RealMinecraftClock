@@ -29,7 +29,7 @@ export async function getData(filePath) {
 }
 
 export function replaceImage(imageId, newSrc, newAlt = null) {
-    const img = document.getElementById(imageId);
+    const img = /** @type {HTMLImageElement} */ (document.getElementById(imageId));
     if (!img) {
         console.warn(`Image with ID "${imageId}" not found.`);
         return;
