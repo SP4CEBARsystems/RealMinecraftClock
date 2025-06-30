@@ -85,3 +85,7 @@ canvas {
 button {
     padding: 0.5em;
 }
+
+header {
+    padding-bottom: 2rem;
+}
