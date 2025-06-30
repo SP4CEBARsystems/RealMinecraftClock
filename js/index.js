@@ -5,6 +5,7 @@ import { places } from "./places.js";
 import ClockElement from "./ClockElement.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    ClockElement.loadFromPlaces(places);
     const sunriseSunsetRequests = places.map(place => place.fetchSunriseSunset());
     Promise.all(sunriseSunsetRequests).then((sunriseSunsets) => {
         sunriseSunsets.map((sunriseSunset, index) => 
@@ -13,6 +14,5 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('all clocks created');
     });
 
-    ClockElement.loadFromPlaces(places);
     new AdjustableMinecraftClock();
 });
