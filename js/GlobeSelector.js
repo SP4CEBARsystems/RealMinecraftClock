@@ -9,6 +9,9 @@ export default class GlobeSelector {
      */
     canvas
 
+    /**
+     * Represents the canvas for selecting a point on an Azimuthal equidistant projection image of the Earth
+     */
     constructor(){
         const canvas = /**@type {HTMLCanvasElement|null}*/ (document.getElementById('earthCanvas'));
         if (!canvas) {

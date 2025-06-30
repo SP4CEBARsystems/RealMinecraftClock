@@ -28,7 +28,7 @@ export default class MinecraftClock {
     animator;
 
     /**
-     * 
+     * Represents a clock element, the clock will be set to match the position of the sun given the current time and the sunrise and sunset times
      * @param {string} imageId 
      * @param {SunriseSunset} [sunriseSunset] 
      * @param {boolean} isInterval 
