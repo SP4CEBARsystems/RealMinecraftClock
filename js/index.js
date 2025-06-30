@@ -5,11 +5,11 @@ import Place from "./place.js";
 document.addEventListener("DOMContentLoaded", () => {
     const places = [
         // new Place(36.7201600, -4.4203400, "template"),
-        new Place(51.495076717135845, 3.6094301071283614, "middelburg"),
-        new Place(52.37048477035961, 4.8998282171669505, "amsterdam"),
-        new Place(40.7108211146979, -73.89155503612763, "newyork"),
-        new Place(35.68088000009859, 139.76736474196923, "tokyo"),
-        new Place(55.757054002675325, 37.616568134408794, "moscow"),
+        new Place(51.495076717135845, 3.6094301071283614, "Middelburg"),
+        new Place(52.37048477035961, 4.8998282171669505, "Amsterdam"),
+        new Place(40.7108211146979, -73.89155503612763, "NewYork"),
+        new Place(35.68088000009859, 139.76736474196923, "Tokyo"),
+        new Place(55.757054002675325, 37.616568134408794, "Moscow"),
     ];
 
     const sunriseSunsetRequests = places.map(place => place.fetchSunriseSunset());
@@ -20,8 +20,41 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('all clocks created', sunriseSunsets);
     });
 
+    const clockElements = document.getElementById('clocks');
+    if (clockElements) {
+        places.map(place => {
+            clockElements.appendChild(newClockElement(place));
+        });
+    }
+    // `<article>
+    //     <h1>${NewYork}</h1>
+    //     <img id="${minecraft-clock-newyork}" class="minecraft-clock" src="./assets/minecraft_clock_images/clock_00.png" alt="Minecraft Clock" />
+    // </article>`
+
     new AdjustableMinecraftClock();
 });
+
+/**
+ * Creates an element to represent a clock
+ * @param {Place} place the location of the clock element on Earth
+ * @returns {Element} the clock element
+ */
+function newClockElement(place) {
+    const article = document.createElement('article');
+
+    const h1 = document.createElement('h1');
+    h1.textContent = place.name;
+
+    const img = document.createElement('img');
+    img.id = place.getClockIdFromName();
+    img.className = "minecraft-clock";
+    img.src = "./assets/minecraft_clock_images/clock_00.png";
+    img.alt = "Minecraft Clock";
+
+    article.appendChild(h1);
+    article.appendChild(img);
+    return article;
+}
 
 // middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
 

@@ -28,7 +28,7 @@ export default class Place {
      * @returns {string} the ID of the DOM element to display the clock on this place
      */
     getClockIdFromName() {
-        return `minecraft-clock-${this.name}`;
+        return `minecraft-clock-${this.name}`.toLowerCase();
     }
 
     /**
