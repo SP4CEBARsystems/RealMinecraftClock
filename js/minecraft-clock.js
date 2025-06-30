@@ -69,7 +69,8 @@ export default class MinecraftClock {
     }
 
     /**
-     * @param {Date} [clockTime] - The time on the clock
+     * Updates the clock with the with the given or current time and starts the animation
+     * @param {Date} [clockTime] the time on the clock to, leave empty to use current time
      */
     updateClock(clockTime){
         if (clockTime === undefined) {

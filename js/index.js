@@ -16,6 +16,3 @@ document.addEventListener("DOMContentLoaded", () => {
     ClockElement.loadFromPlaces(places);
     new AdjustableMinecraftClock();
 });
-
-// middelburgClock.updateClock(new Date("2025-05-13T12:00:00Z"));
-
