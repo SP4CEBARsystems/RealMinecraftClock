@@ -10,6 +10,7 @@ export default class AdjustableMinecraftClock extends MinecraftClock {
         if (!setClockButton) {
             return;
         }
+        
         setClockButton.addEventListener("click", () => {
             const lat = parseFloat(/** @type {HTMLInputElement} */(document.getElementById("custom-clock-latitude-input"))?.value);
             const lon = parseFloat(/** @type {HTMLInputElement} */(document.getElementById("custom-clock-longitude-input"))?.value);
@@ -22,6 +23,7 @@ export default class AdjustableMinecraftClock extends MinecraftClock {
                 this.setSunriseSunset(sunriseSunset);
             });
         });
-        console.log(new GlobeSelector());
+
+        new GlobeSelector();
     }
 }

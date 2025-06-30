@@ -4,7 +4,7 @@ import Place from "./place.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const places = [
-        // new ClockLocation(36.7201600, -4.4203400, "template"),
+        // new Place(36.7201600, -4.4203400, "template"),
         new Place(51.495076717135845, 3.6094301071283614, "middelburg"),
         new Place(52.37048477035961, 4.8998282171669505, "amsterdam"),
         new Place(40.7108211146979, -73.89155503612763, "newyork"),
@@ -63,6 +63,17 @@ export function replaceImage(imageId, newSrc, newAlt = null) {
 }
 
 /**
+ * 
+ * @param {TimerHandler} callback 
+ * @param {number} interval 
+ * @param {number} timeout 
+ */
+export function setIntervalWithTimeout(callback, interval, timeout) {
+    const intervalId = setInterval(callback, interval);
+    setTimeout(() => clearInterval(intervalId), timeout);
+}
+
+/**
  * Maps a value between inMin and inMax to spread evenly between outMin and outMax
  * @param {number} value 
  * @param {number} inMin 
@@ -76,12 +87,12 @@ function linearMap(value, inMin, inMax, outMin, outMax) {
 }
 
 /**
- * 
- * @param {TimerHandler} callback 
- * @param {number} interval 
- * @param {number} timeout 
+ * Linear interpolation between two values
+ * @param {number} a 
+ * @param {number} b 
+ * @param {number} t 
+ * @returns {number}
  */
-export function setIntervalWithTimeout(callback, interval, timeout) {
-    const intervalId = setInterval(callback, interval);
-    setTimeout(() => clearInterval(intervalId), timeout);
+function lerp(a, b, t) {
+    return a + (b - a) * t;
 }

@@ -57,15 +57,4 @@ export default class ClockAnimator {
         this.currentDayCycle += this.animationVelocity * this.animationDeltaTime / 1000;
         if (this.onUpdate) this.onUpdate();
     }
-
-    /**
-     * Linear interpolation between two values
-     * @param {number} a 
-     * @param {number} b 
-     * @param {number} t 
-     * @returns {number}
-     */
-    lerp(a, b, t) {
-        return a + (b - a) * t;
-    }
 }
