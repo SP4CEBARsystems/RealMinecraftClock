@@ -7,9 +7,11 @@
 	<link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-	<main>
+	<header>
 		<h1>Real Minecraft Clocks</h1>
 		<p>On earth</p>
+	</header>
+	<main>
 		<section class="custom-clock">
 			<article>
 				<h2>Where is your clock located?</h2>
@@ -19,11 +21,11 @@
 					</summary>
 					<canvas id="earthCanvas" width="500" height="500"></canvas>
 				</details>
-				<div>
+				<section>
 					<input type="number" id="custom-clock-latitude-input" placeholder="Latitude">
 					<input type="number" id="custom-clock-longitude-input" placeholder="Longitude">
 					<button id="set-custom-clock-button">Set Clock</button>
-				</div>
+				</section>
 				<img id="minecraft-clock-custom" class="minecraft-clock" src="./assets/minecraft_clock_images/clock_00.png" alt="Minecraft Clock" />
 			</article>
 		</section>
@@ -31,13 +33,15 @@
 		</section>
 		<script type="module" src="./js/index.js"></script>
 	</main>
+	<footer>
+		<aside>
+			Site developed by <a href="https://github.com/SP4CEBARsystems">Boaz Crezee</a>
+			<h3>
+				Attributions
+			</h3>
+			Azimuthal equidistant projection image by <a href="//commons.wikimedia.org/wiki/User:Strebe" title="User:Strebe">Strebe</a> - Own work, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=16115152">Link</a>
+		</aside>
+	</footer>
 	<script type="module" src="./js/index.js"></script>
-	<aside>
-		Site developed by <a href="https://github.com/SP4CEBARsystems">Boaz Crezee</a>
-		<h3>
-			Attributions
-		</h3>
-		Azimuthal equidistant projection image by <a href="//commons.wikimedia.org/wiki/User:Strebe" title="User:Strebe">Strebe</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=16115152">Link</a>
-	</aside>
 </body>
 </html>
