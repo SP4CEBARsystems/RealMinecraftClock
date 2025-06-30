@@ -3,10 +3,10 @@ import SunriseSunset from "./SunriseSunset.js";
 
 export default class Place {
     /**
-     * 
+     * Represents the location of any place on planet Earth
      * @param {number|null} latitude 
      * @param {number|null} longitude 
-     * @param {string} [name] 
+     * @param {string} [name] of the place like a city or an area
      */
     constructor(latitude = null, longitude = null, name) {
         this.name = name ?? null;
@@ -15,7 +15,7 @@ export default class Place {
     }
 
     /**
-     * 
+     * Sets a place on planet Earth
      * @param {number} latitude 
      * @param {number} longitude 
      */

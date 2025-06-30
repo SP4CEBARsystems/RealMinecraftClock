@@ -16,11 +16,17 @@ export default class ClockAnimator {
         this.start();
     }
 
+    /**
+     * Starts the interval that runs the animation
+     */
     start() {
         this.clear();
         this.animationId = setInterval(this.update.bind(this), this.animationDeltaTime);
     }
     
+    /**
+     * Clears the interval that runs the animation
+     */
     clear() {
         // this.animationVelocity = 0;
         if (this.animationId !== undefined) {
@@ -29,6 +35,9 @@ export default class ClockAnimator {
         }
     }
 
+    /**
+     * Simulates a spring and calls the this.onUpdate callback method to render it
+     */
     update() {
         // Interpolate between current and target day cycle
         // this.currentDayCycle = this.targetDayCycle;

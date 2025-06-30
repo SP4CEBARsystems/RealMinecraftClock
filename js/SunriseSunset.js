@@ -3,6 +3,8 @@ import Place from "./place.js";
 
 export default class SunriseSunset {
     /**
+     * Creates an object that matches the returned object from the sunrise-sunset API with some additional attributes
+     * (https://sunrise-sunset.org/api)
      * @param sunriseSunsetObject {{
      *   results:
      *   {
@@ -29,6 +31,9 @@ export default class SunriseSunset {
         this.sunset = new Date(this.results.sunset);
     }
     
+    /**
+     * @returns {{sunrise: Date; sunset: Date;}} a subset of "this" object with date values for the sunset and sunrise times
+     */
     getTimes(){
         return {sunrise: this.sunrise, sunset: this.sunset};
     }

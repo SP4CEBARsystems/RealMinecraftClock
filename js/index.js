@@ -43,6 +43,13 @@ export async function fetchJson(filePath) {
     }
 }
 
+/**
+ * Sets the src and alt of an image given a DOM ID
+ * @param {string} imageId DOM element ID of the image
+ * @param {string} newSrc scr to set in the image element
+ * @param {string} newAlt alt to set in the image element
+ * @returns 
+ */
 export function replaceImage(imageId, newSrc, newAlt = null) {
     const img = /** @type {HTMLImageElement} */ (document.getElementById(imageId));
     if (!img) {
