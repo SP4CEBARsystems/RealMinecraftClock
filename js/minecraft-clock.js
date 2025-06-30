@@ -1,4 +1,3 @@
-import { replaceImage } from "./index.js";
 import ClockAnimator from "./clock-animator.js";
 import SunriseSunset from "./SunriseSunset.js";
 
@@ -123,6 +122,25 @@ export default class MinecraftClock {
             console.warn(`Clock with frame "${safeClockPhase}" not found.`);
             return;
         }
-        replaceImage(this.imageId, `./assets/minecraft_clock_images/clock_${`${safeClockPhase}`.padStart(2, "0")}.png`);
+        MinecraftClock.replaceImage(this.imageId, `./assets/minecraft_clock_images/clock_${`${safeClockPhase}`.padStart(2, "0")}.png`);
+    }
+
+    /**
+     * Sets the src and alt of an image given a DOM ID
+     * @param {string} imageId DOM element ID of the image
+     * @param {string} newSrc scr to set in the image element
+     * @param {string|null} newAlt alt to set in the image element
+     * @returns 
+     */
+    static replaceImage(imageId, newSrc, newAlt = null) {
+        const img = /** @type {HTMLImageElement} */ (document.getElementById(imageId));
+        if (!img) {
+            console.warn(`Image with ID "${imageId}" not found.`);
+            return;
+        }
+        img.src = newSrc;
+        if (newAlt !== null) {
+            img.alt = newAlt;
+        }
     }
 }

@@ -1,4 +1,3 @@
-import { fetchJson } from "./index.js";
 import Place from "./place.js";
 
 export default class SunriseSunset {
@@ -47,9 +46,27 @@ export default class SunriseSunset {
     static async fetchSunriseSunset(place){
         try {
             const url = `https://api.sunrise-sunset.org/json?lat=${place.latitude}&lng=${place.longitude}&formatted=0`;
-            const sunriseSunsetObject = await fetchJson(url);
+            const sunriseSunsetObject = await SunriseSunset.fetchJson(url);
             return new SunriseSunset(sunriseSunsetObject);
         } catch (error) {
+            throw error;
+        }
+    }
+    
+    /**
+     * Fetches any JSON object from an url
+     * @param {string} requestUrl url to request JSON
+     * @returns {Promise<any>} object from returned JSON
+     */
+    static async fetchJson(requestUrl) {
+        try {
+            const response = await fetch(requestUrl);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(error.message);
             throw error;
         }
     }
