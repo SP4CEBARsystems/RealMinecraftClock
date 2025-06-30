@@ -34,6 +34,12 @@ a {
     border-radius: 0.5em;
 }
 
+.no-style {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+}
+
 .minecraft-clock {
     image-rendering: pixelated;
     background-size: contain;

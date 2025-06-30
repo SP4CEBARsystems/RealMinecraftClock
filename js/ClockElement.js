@@ -7,19 +7,24 @@ export default class ClockElement {
      * @returns {Element} the clock element
      */
     static newClockElement(place) {
+        const clockId = place.getClockIdFromName();
         const article = document.createElement('article');
+        const a = document.createElement('a');
+        a.classList.add('no-style')
+        a.href = `./show.html?id=${clockId}`;
 
         const h1 = document.createElement('h1');
         h1.textContent = place.name;
 
         const img = document.createElement('img');
-        img.id = place.getClockIdFromName();
+        img.id = clockId;
         img.className = "minecraft-clock";
         img.src = "./assets/minecraft_clock_images/clock_00.png";
         img.alt = "Minecraft Clock";
 
-        article.appendChild(h1);
-        article.appendChild(img);
+        article.appendChild(a);
+        a.appendChild(h1);
+        a.appendChild(img);
         return article;
     }
 
